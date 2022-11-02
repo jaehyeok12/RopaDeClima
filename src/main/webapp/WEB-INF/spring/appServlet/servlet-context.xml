@@ -3,7 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -20,6 +23,34 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
+		
+		<!-- DB정보 -->
+	<beans:bean name="datasource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name="driverClassName"
+			value="org.mariadb.jdbc.Driver" />
+		<beans:property name="url"
+			value="jdbc:mariadb://localhost:3307/mydb" />
+		<beans:property name="username" value="web_user" />
+		<beans:property name="password" value="pass" />
+	</beans:bean>
+	<!-- DataSource를 이용해 DB 접속 설정 -->
+	<!-- name ==> 정해진대로만 사용 id==> 임의로 정해서 사용 -->
+	<beans:bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 위에 있는 접속정보 가져오기 -->
+		<beans:property name="dataSource" ref="datasource" />
+		<!-- 실행할 쿼리문이 있는 위치 지정 -->
+		<!-- 실제 패키지가 없으면 에러 발생 -->
+		<beans:property name="mapperLocations"
+			value="classpath:/com/gudi/project/dao/*.xml"></beans:property>
+	</beans:bean>
+	<!-- mybatis를 사용하는 영역 지정 -->
+
+	<mybatis-spring:scan
+		base-package="com.gudi.project" />
+		
 	
 	<context:component-scan base-package="com.gudi.project" />
 	
