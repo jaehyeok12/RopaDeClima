@@ -31,8 +31,8 @@
 		<beans:property name="driverClassName"
 			value="org.mariadb.jdbc.Driver" />
 		<beans:property name="url"
-			value="jdbc:mariadb://localhost:3307/mydb" />
-		<beans:property name="username" value="web_user" />
+			value="jdbc:mariadb://0.tcp.jp.ngrok.io:16868/mydb" />
+		<beans:property name="username" value="RPDC" />
 		<beans:property name="password" value="pass" />
 	</beans:bean>
 	<!-- DataSource를 이용해 DB 접속 설정 -->

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class TestController {
 	//테스트용 클래스
 	//이거 복붙해서 써요
+	//여기다 코드쓰면 바보
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
