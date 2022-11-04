@@ -7,15 +7,16 @@ import org.springframework.stereotype.Service;
 
 import com.gudi.project.dao.memberDAO;
 
+
 @Service
 public class MemberService {
-
-	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired memberDAO dao;
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public String login(String id, String pw) {
-	
+		logger.info("로그인 서비스");
 		return dao.login(id,pw);
 	}
 
@@ -27,14 +28,17 @@ public class MemberService {
 
 	public int join(String id, String pw, String pw2, String name, String nick, String birth, String phone,
 			String gender) {
-		
+		logger.info("회원가입 서비스");
 		return dao.join(id, pw, pw2, name, nick, birth, phone, gender);
 	}
 
-	
-	
-	
-	
+	public boolean over(String nickName) {
+		String overNickName = dao.over(nickName);
+		logger.info("over nickName : "+overNickName);		
+		return overNickName == null ? false : true;
 	}
 
+	
+
+}
 

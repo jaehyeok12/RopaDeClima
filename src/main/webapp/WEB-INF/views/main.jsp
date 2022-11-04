@@ -10,24 +10,8 @@
 <style></style>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <body>
-	<form action="login" method="post">
-		<table>
-		<tr>
-			<th>ID</th>
-			<td><input type="text" name="id" /></td>
-		</tr>
-		<tr>
-			<th>PW</th>
-			<td><input type="password" name="pw" /></td>
-		</tr>
-		<tr>
-			<th colspan="2">
-				<input type="submit" value="LOGIN"/>
-				<input type="button" value="회원가입" onclick="location.href='joinForm'"/>
-			</th>
-		</tr>
-	</table>	
-	</form>
+	<p>메인 페이지</p>
+	안녕하세요 ${sessionScope.loginId} 님.
 </body>
 <script></script>
 </html>

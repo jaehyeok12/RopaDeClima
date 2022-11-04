@@ -8,5 +8,7 @@ public interface memberDAO {
 
 	int join(String id, String pw, String pw2, String name, String nick, String birth, String phone, String gender);
 
+	String over(String nickName);
+
 	
 }
