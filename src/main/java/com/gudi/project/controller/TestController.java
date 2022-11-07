@@ -19,7 +19,7 @@ public class TestController {
 		logger.info("정상 실행");
 		model.addAttribute("test", "test" );
 
-		return "test";
+		return "adminMain";
 	}
 
 }
