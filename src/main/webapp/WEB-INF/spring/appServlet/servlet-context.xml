@@ -31,7 +31,7 @@
 		<beans:property name="driverClassName"
 			value="org.mariadb.jdbc.Driver" />
 		<beans:property name="url"
-			value="jdbc:mariadb://0.tcp.jp.ngrok.io:16868/mydb" />
+			value="jdbc:mariadb://0.tcp.jp.ngrok.io:16868/rpdc" />
 		<beans:property name="username" value="RPDC" />
 		<beans:property name="password" value="pass" />
 	</beans:bean>
