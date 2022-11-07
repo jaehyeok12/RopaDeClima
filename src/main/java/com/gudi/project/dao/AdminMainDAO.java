@@ -7,9 +7,11 @@ import com.gudi.project.dto.DecListDTO;
 public interface AdminMainDAO {
 	int cntDesList();
 	ArrayList<DecListDTO> recDesList();
-/*
- * 참고용.
- * start_mapper 확인할 것
- * 여기다 코드 적으면 바보
- * */
+	int cntAdmList();
+	ArrayList<DecListDTO> recAdmList();
+	int cntRecJoinList();
+	ArrayList<DecListDTO> recJoinList();
+	int cntBoardList();
+	ArrayList<DecListDTO> recBoardList();
+
 }

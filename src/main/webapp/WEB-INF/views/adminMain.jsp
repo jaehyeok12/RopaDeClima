@@ -133,31 +133,34 @@ div .col-sm-8 {
 	text-align: center;
 }
 
-.table{
+.table {
 	width: 540px;
-	max-width:540px;
+	max-width: 540px;
 	text-align: center;
-}
-tr{
-width: 540px;
-}
-th, td{
-	width: 180px;
-}
-@media screen and (max-width: 1500px){
-.table{
-	width: 270px;
-	max-width:250px;
-	text-align: center;
-}
-tr{
-width: 270px;
-}
-th, td{
-	width: 90px;
 }
 
+tr {
+	width: 540px;
 }
+
+th, td {
+	width: 180px;
+}
+
+@media screen and (max-width: 1500px) {
+	.table {
+		width: 270px;
+		max-width: 250px;
+		text-align: center;
+	}
+	tr {
+		width: 270px;
+	}
+	th, td {
+		width: 90px;
+	}
+}
+
 @media screen and (max-width: 767px) {
 	.sidenav {
 		height: auto;
@@ -295,7 +298,7 @@ th, td{
 						</table>
 					</div>
 
-					<div class="col-sm-8" style="margin: 0px 10px; ">
+					<div class="col-sm-8" style="margin: 0px 10px;">
 						<h4>최근 공지 리스트</h4>
 						<table class="table" id="adminNoticeTable">
 							<tr>
@@ -350,7 +353,7 @@ th, td{
 						<h3>최근 게시물 리스트</h3>
 						<table class="table" id="adminRecBoardTable">
 							<tr>
-								<th>글 번호tt</th>
+								<th>글 번호</th>
 								<th>작성자</th>
 								<th>작성날짜</th>
 							</tr>
@@ -380,9 +383,153 @@ th, td{
 		</footer>
 </body>
 <script>
-//AJAX로 ㄱㄱ
-var page=1;
 
+//AJAX로 ㄱㄱ
+//var page=1;
+
+
+function desList(){
+	$.ajax({
+    	type : 'POST',
+		url : 'adminDes',
+		data : {},
+		dataType : 'JSON',
+		success : function(data) {
+			console.log(data.resDes);
+			if (data.desCnt> 0) {
+				alert('데이터 조회에 성공했습니다.');
+				/*
+				$('#pagination').twbsPagination({
+					startPage:1,//시작 페이지
+					totalPages:totalPages,//총 페이지 수
+					visiblePages:5,//기본으로 보여질 페이지 수
+					onPageClick:function(e,page){//클릭했을 때 실행 내용
+						console.log(e);	
+						console.log(page);	
+						listCall(page);
+					}
+				
+				});
+						*/
+			} else {
+				//alert('조회된 데이터가 없습니다.');
+				$("#report").empty();
+				$("#report").append("<td colspan=3>"+data.resDes+"</td>");
+			}
+		},
+		error : function(e) {
+			alert('error00');
+		}
+    });
+}
+	//관리자 알람
+    function admList(){
+    	$.ajax({
+        	type : 'POST',
+    		url : 'adminAdm',
+    		data : {},
+    		dataType : 'JSON',
+    		success : function(data) {
+    			console.log(data.resAdm);
+    			if (data.AdmCnt> 0) {
+    				alert('데이터 조회에 성공했습니다.');
+    				/*
+    				$('#pagination').twbsPagination({
+    					startPage:1,//시작 페이지
+    					totalPages:totalPages,//총 페이지 수
+    					visiblePages:5,//기본으로 보여질 페이지 수
+    					onPageClick:function(e,page){//클릭했을 때 실행 내용
+    						console.log(e);	
+    						console.log(page);	
+    						listCall(page);
+    					}
+    				});
+    				
+    				*/
+    			} else {
+    				//alert('조회된 데이터가 없습니다.');
+    				$("#notice").empty();
+    				$("#notice").append("<td colspan=3>공지 : "+data.resAdm+"</td>");
+    			}
+    		},
+    		error : function(e) {
+    			alert('error00');
+    		}
+        });
+    }
+function recJoinList(){
+        	$.ajax({
+            	type : 'POST',
+        		url : 'adminRecJoin',
+        		data : {},
+        		dataType : 'JSON',
+        		success : function(data) {
+        			console.log(data.resRecJoin);
+        			if (data.RecJoinCnt> 0) {
+        				//alert('데이터 조회에 성공했습니다.');
+        				createRecJoinTable(data.resRecJoin);
+        				/*
+        				$('#pagination').twbsPagination({
+        					startPage:1,//시작 페이지
+        					totalPages:totalPages,//총 페이지 수
+        					visiblePages:5,//기본으로 보여질 페이지 수
+        					onPageClick:function(e,page){//클릭했을 때 실행 내용
+        						console.log(e);	
+        						console.log(page);	
+        						listCall(page);
+        					}
+        				
+        				});
+        						*/
+        			} else {
+        				//alert('조회된 데이터가 없습니다.');
+        				$("#recJoin").empty();
+        				$("#recJoin").append("<td colspan=3>"+data.resRecJoin+"</td>");
+        			}
+        		},
+        		error : function(e) {
+        			alert('error00');
+        		}
+            });
+}
+            function boardList(){
+            	$.ajax({
+                	type : 'POST',
+            		url : 'adminBoard',
+            		data : {},
+            		dataType : 'JSON',
+            		success : function(data) {
+            			console.log(data.resBoard);
+            			if (data.desCnt> 0) {
+            				alert('데이터 조회에 성공했습니다.');
+            				/*
+            				$('#pagination').twbsPagination({
+            					startPage:1,//시작 페이지
+            					totalPages:totalPages,//총 페이지 수
+            					visiblePages:5,//기본으로 보여질 페이지 수
+            					onPageClick:function(e,page){//클릭했을 때 실행 내용
+            						console.log(e);	
+            						console.log(page);	
+            						listCall(page);
+            					}
+            				});
+            						*/
+            			} else {
+            				//alert('조회된 데이터가 없습니다.');
+            				$("#board").empty();
+            				$("#board").append("<td colspan=3>"+data.resBoard+"</td>");
+            			}
+            		},
+            		error : function(e) {
+            			alert('error00');
+            		}
+                });
+            }
+            
+            
+            
+            
+/**
 function listshow(page){
 	$.ajax({
     	type : 'POST',
@@ -392,8 +539,8 @@ function listshow(page){
 		},
 		dataType : 'JSON',
 		success : function(data) {
-			console.log(data.success);
-			if (data.success > 0) {
+			console.log(data.res);
+			if (data.desCnt> 0) {
 				alert('데이터 조회에 성공했습니다.');
 				$('#pagination').twbsPagination({
 					startPage:1,//시작 페이지
@@ -407,7 +554,15 @@ function listshow(page){
 				
 				});
 			} else {
-				alert('조회된 데이터가 없습니다.');
+				//alert('조회된 데이터가 없습니다.');
+				$("#report").empty();
+				$("#notice").empty();
+				$("#recJoin").empty();
+				$("#board").empty();
+				$("#report").append("<td colspan=3>"+data.res+"</td>");
+				$("#notice").append("<td colspan=3>"+data.res+"</td>");
+				$("#recJoin").append("<td colspan=3>"+data.res+"</td>");
+				$("#board").append("<td colspan=3>"+data.res+"</td>");
 			}
 		},
 		error : function(e) {
@@ -415,8 +570,31 @@ function listshow(page){
 		}
     });
 }
+ * 
+ */
 
-$(document).ready(listshow(page));
+function createRecJoinTable(list) {
+	var content = "";
+	for (var i = 0; i < list.length; i++) {
 
+		date = new Date(list[i].reg_date);
+		console.log(date.toLocaleDateString('ko-KR'))
+		console.log(list[i]);
+		content += '<tr>';
+		content += '<td>' + list[i].mem_num + '</td>';
+		content += '<td><a href="detail?mem_num=' + list[i].idx + '">'
+				+ list[i].mem_nickname + '</td>';
+		content += '<td>' + list[i].mem_regDate + '</td>';
+		content += '</tr>';
+	}
+	$("#recJoin").empty();
+	$("#recJoin").append(content);
+
+}
+ 
+$(document).ready(desList());
+admList();
+recJoinList();
+boardList();
 </script>
 </html>
