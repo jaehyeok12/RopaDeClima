@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.gudi.project.dao.memberDAO">
+<!--  한 곳에 쓰지 말고 기능별로 분리
+		ex) 메인 = main_mapper.xml + mainDAO
+			 프로필 = profile_mapper.xml + ProfileDAO
+ -->
+ 	<select id="login" resultType="String">
+		SELECT mem_email FROM member
+			WHERE mem_email = #{param1} AND mem_pw = #{param2}
+	</select>
+
+	<select id="overlay" resultType="String">
+		SELECT mem_email FROM member WHERE mem_email = #{param1}
+	</select>
+
+	<select id="over" resultType="String">
+		SELECT mem_nickname FROM member WHERE mem_nickname = #{param1}
+	</select>
+
+
+	<insert id="join">
+		INSERT INTO member(mem_num, mem_email, mem_pw, mem_name, mem_nickname, mem_birth, mem_phon, mem_sex, mem_ban, mem_autority)
+		VALUES(nextval(member_seq),#{param1},#{param2},#{param4},#{param5},#{param6},#{param7},#{param8},1,'사용자')
+	</insert>
+ 	
+</mapper>
