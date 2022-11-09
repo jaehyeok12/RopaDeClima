@@ -11,7 +11,7 @@ public class DecListDTO {
 	private int res_num;
 	private Date dec_date;
 	
-	//dec
+	//decs
 	private int res_dis;
 	private int res_state;
 	private String reason;
@@ -23,6 +23,7 @@ public class DecListDTO {
 	
 	private String mem_nickname;
 	private Date mem_birth;
+	private Date mem_regDate;
 	private String mem_phon;
 	private String mem_pw;
 	private String mem_sex;
@@ -34,6 +35,127 @@ public class DecListDTO {
 	private String msg_content;
 	private Date write_time;
 	private int sender;
+	
+	//board
+	private int board_num;
+	private Date board_time;
+	private int board_good;
+	private String board_place;
+	private Date board_date;
+	private String board_State;
+	private int weather_num;
+	private int board_tmn;
+	private int board_tmx;
+	
+	
+	public String getMem_name() {
+		return mem_name;
+	}
+	public int getBoard_num() {
+		return board_num;
+	}
+	public void setBoard_num(int board_num) {
+		this.board_num = board_num;
+	}
+	public Date getBoard_time() {
+		return board_time;
+	}
+	public void setBoard_time(Date board_time) {
+		this.board_time = board_time;
+	}
+	public int getBoard_good() {
+		return board_good;
+	}
+	public void setBoard_good(int board_good) {
+		this.board_good = board_good;
+	}
+	public String getBoard_place() {
+		return board_place;
+	}
+	public void setBoard_place(String board_place) {
+		this.board_place = board_place;
+	}
+	public Date getBoard_date() {
+		return board_date;
+	}
+	public void setBoard_date(Date board_date) {
+		this.board_date = board_date;
+	}
+	public String getBoard_State() {
+		return board_State;
+	}
+	public void setBoard_State(String board_State) {
+		this.board_State = board_State;
+	}
+	public int getWeather_num() {
+		return weather_num;
+	}
+	public void setWeather_num(int weather_num) {
+		this.weather_num = weather_num;
+	}
+	public int getBoard_tmn() {
+		return board_tmn;
+	}
+	public void setBoard_tmn(int board_tmn) {
+		this.board_tmn = board_tmn;
+	}
+	public int getBoard_tmx() {
+		return board_tmx;
+	}
+	public void setBoard_tmx(int board_tmx) {
+		this.board_tmx = board_tmx;
+	}
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
+	public String getMem_email() {
+		return mem_email;
+	}
+	public void setMem_email(String mem_email) {
+		this.mem_email = mem_email;
+	}
+	public Date getMem_birth() {
+		return mem_birth;
+	}
+	public void setMem_birth(Date mem_birth) {
+		this.mem_birth = mem_birth;
+	}
+	public Date getMem_regDate() {
+		return mem_regDate;
+	}
+	public void setMem_regDate(Date mem_regDate) {
+		this.mem_regDate = mem_regDate;
+	}
+	public String getMem_phon() {
+		return mem_phon;
+	}
+	public void setMem_phon(String mem_phon) {
+		this.mem_phon = mem_phon;
+	}
+	public String getMem_pw() {
+		return mem_pw;
+	}
+	public void setMem_pw(String mem_pw) {
+		this.mem_pw = mem_pw;
+	}
+	public String getMem_sex() {
+		return mem_sex;
+	}
+	public void setMem_sex(String mem_sex) {
+		this.mem_sex = mem_sex;
+	}
+	public boolean isMem_ban() {
+		return mem_ban;
+	}
+	public void setMem_ban(boolean mem_ban) {
+		this.mem_ban = mem_ban;
+	}
+	public String getMem_autority() {
+		return mem_autority;
+	}
+	public void setMem_autority(String mem_autority) {
+		this.mem_autority = mem_autority;
+	}
 	private boolean exp_state;
 	private Date exp_time;
 	
