@@ -14,7 +14,16 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="resources/js/jquery.twbsPagination.js"></script>
+	<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
 <style>
 /*사이드바*/
 /* 사이드바 래퍼 스타일 */
@@ -297,7 +306,6 @@ TEST
 			success : function(result) {
 				console.log(result.resDes);
 				if (result.desCnt > 0) {
-					alert('데이터 조회에 성공했습니다.');
 					createDesTable(result.resDes, result.resDateStrs);
 					/*
 					$('#pagination').twbsPagination({
@@ -313,7 +321,6 @@ TEST
 					});
 					 */
 				} else {
-					//alert('조회된 데이터가 없습니다.');
 					$("#report").empty();
 					$("#report").append(
 							"<td colspan=3>" + result.resDes + "</td>");
@@ -335,7 +342,6 @@ TEST
 				console.log(result.resAdm);
 				if (result.AdmCnt > 0) {
 					createNoticeTable(result.resAdm, result.resAdmDates)
-					alert('데이터 조회에 성공했습니다.');
 					/*
 					$('#pagination').twbsPagination({
 						startPage:1,//시작 페이지
@@ -350,7 +356,6 @@ TEST
 					
 					 */
 				} else {
-					//alert('조회된 데이터가 없습니다.');
 					$("#notice").empty();
 					$("#notice").append(
 							"<td colspan=3>공지 : " + result.resAdm + "</td>");
@@ -370,7 +375,6 @@ TEST
 			success : function(result) {
 				console.log(result.resRecJoin);
 				if (result.RecJoinCnt > 0) {
-					//alert('데이터 조회에 성공했습니다.');
 					createRecJoinTable(result.resRecJoin, result.resRecJoinDates);
 					/*
 					$('#pagination').twbsPagination({
@@ -393,7 +397,6 @@ TEST
 				}
 			},
 			error : function(e) {
-				alert('error00');
 			}
 		});
 	}
@@ -406,7 +409,6 @@ TEST
 			success : function(result) {
 				console.log(result.resBoard);
 				if (result.desCnt > 0) {
-					alert('데이터 조회에 성공했습니다.');
 					createBoardTable(result.resBoard, result.resBoardDates);
 					/*
 					$('#pagination').twbsPagination({
@@ -421,7 +423,6 @@ TEST
 					});
 					 */
 				} else {
-					//alert('조회된 데이터가 없습니다.');
 					$("#board").empty();
 					$("#board").append(
 							"<td colspan=3>" + result.resBoard + "</td>");

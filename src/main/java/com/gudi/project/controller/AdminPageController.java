@@ -38,7 +38,6 @@ public class AdminPageController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired AdminMainDAO amDAOs;
 	long curDate;
-	int year, month, day =0;
 	Date date=null;
 	String dateStr ="";
 	ArrayList<String> dateStrs = null;
