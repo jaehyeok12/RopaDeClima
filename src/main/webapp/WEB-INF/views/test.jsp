@@ -8,12 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<<<<<<< HEAD
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-=======
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
->>>>>>> origin/master
 </head>
 <style>
 table, th, td {
@@ -43,7 +40,6 @@ p{
 </style>
 
 <body>
-<<<<<<< HEAD
 	<h1>날씨</h1>
 	<button class="allShow">전체조회</button> 
 	<button class ="newOrder">최신순</button>
@@ -101,7 +97,6 @@ p{
 		for(var i=0; i<url.length; i++){
 			content += '<div style = "float:left">';
 			content += '<img src ="'+ url[i] +'">';
-			content += '<p>'+ ${url.mem_nickname} +'</p>';
 			//content += '<p>'+url.board_num+'</p>'+'</div>'		
 			content += '</div>'		
 			if(i%4 == 0){
@@ -125,7 +120,6 @@ p{
 		for(var i=0; i<allShow.length; i++){
 			content += '<div style = "float:left">';
 			content += '<img src ="'+ allShow[i] +'">';
-			content += '<p>'+ ${allShow.mem_nickname} +'</p>';		
 			content += '</div>'		
 			if(i%4 == 0){
 				content += '<br>';
@@ -144,7 +138,6 @@ p{
 		for(var i=0; i<newOrder.length; i++){
 			content += '<div style = "float:left">';
 			content += '<img src ="'+ newOrder[i] +'">';
-			content += '<p>'+ ${newOrder.mem_nickname} +'</p>';		
 			content += '</div>'		
 			if(i%4 == 0){
 				content += '<br>';
@@ -162,7 +155,6 @@ p{
 		for(var i=0; i<like.length; i++){
 			content += '<div style = "float:left">';
 			content += '<img src ="'+ like[i] +'">';
-			content += '<p>'+ ${like.mem_nickname} +'</p>';		
 			content += '</div>'		
 			if(i%4 == 0){
 				content += '<br>';
@@ -215,7 +207,7 @@ p{
 				,dtataType : 'JSON'
 				,success : function(data){
 					console.log(data);
-					newOrder(data.newOrder);
+					allShow_list(data.newOrder);
 				}
 				,error : function(e){
 					console.log(e);
@@ -247,7 +239,7 @@ p{
 				,dataType : 'JSON'
 				,success : function (data) {
 					console.log(data);
-					likeList(data.like);
+					allShow_list(data.like);
 				}
 				,error : function(e){
 					console.log(e);
@@ -256,49 +248,5 @@ p{
 		});
 	});
 	
-	
- 
-	
-
-=======
-<h1>날씨</h1>
-<h3 id="tmp">오늘의 기온 : </h3>
-
-</body>
-<script>
-function weather(){
-	jQuery.ajax({
-		url:"/project/api/weather",
-		type : "get",
-		timeout : 30000,
-		contentType:"application/json",
-		dataType:"json",
-		success : function(data, status, xhr){
-			
-			let dataheader = data.result.response.header.resultCode;
-				console.log(data);
-		
-			if(dataheader="00"){
-				console.log("success ==> ");
-				console.log(data);
-			}else{
-				console.log("fail ==> ");
-				console.log(data);
-			}
-		var tmp = data.result.response.body.items.item[0].fcstValue
-		console.log(tmp);
-		$("#tmp").append(tmp);
-		},
-		error:function(e, status, xhr, data){
-			console.log("err");
-			console.log(e);
-		}
-	})
-	
-	
-}
-
-weather();
->>>>>>> origin/master
 </script>
 </html>

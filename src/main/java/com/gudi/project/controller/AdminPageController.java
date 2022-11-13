@@ -41,7 +41,7 @@ public class AdminPageController {
 	Date date=null;
 	String dateStr ="";
 	ArrayList<String> dateStrs = null;
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/1")
 	public String gotest(HttpSession session) {
 		session.setAttribute("id", "관리자");//관리자 세션 등록 ==> 나중에 로그인한 계정으로 세션 Value 변경
 		logger.info("세션 저장 했어요");

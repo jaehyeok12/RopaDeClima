@@ -5,20 +5,20 @@
 
 <mapper namespace="com.gudi.project.dao.MainDAO">
 	<select id="recommend" resultType="String">
-		select pp.newPhoto_name, m.mem_nickname from post p , post_pho pp, member m  where p.mem_num = m.mem_num and pp.board_num = p.board_num and (p.board_tmn between #{param1} - 1 and #{param1} + 1)and(p.board_tmx between #{param2} - 1 and #{param2} + 1) and p.board_state ='정상'
+		select pp.newPhoto_name from post p , post_pho pp where pp.board_num = p.board_num and (p.board_tmn between #{param1} - 1 and #{param1} + 1)and(p.board_tmx between #{param2} - 1 and #{param2} + 1) and p.board_state ='정상'
 	</select> 
 	
 	<select id="allShow" resultType="String">
-		select pp.newPhoto_name, m.mem_nickname  from post_pho pp, member m , post p where m.mem_num  = p.mem_num and pp.board_num =p.board_num
+		select pp.newPhoto_name from post_pho pp, post p where pp.board_num =p.board_num
 	</select>
 	
 	
 	<select id="newOrder" resultType="String">
-		select board_time from post order by board_time desc
+		select newphoto_name from post p, post_pho pp where p.board_num=pp.board_num order by board_time desc
 	</select>
 	
 	<select id="like" resultType="String">
-		select board_good from post order by board_good desc
+		select newphoto_name from post p, post_pho pp where p.board_num=pp.board_num  from post order by board_good desc
 	</select>
 
 

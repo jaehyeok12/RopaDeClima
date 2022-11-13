@@ -88,14 +88,14 @@ public class MainController {
 	@ResponseBody
 	@RequestMapping(value = "/newOrder")
 	public HashMap<String, Object> newOrder(){
-		String url = "resourcex/img/";
+		String url = "resources/img/";
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<String> newOrder = dao.newOrder();
 		ArrayList<String> arr = new ArrayList();
 		for (int i = 0; i < newOrder.size(); i++) {
 			url += newOrder.get(i);
 			arr.add(url);
-			url += "resources/img/";
+			url = "resources/img/";
 		}
 		map.put("newOrder", arr);
 		return map;
@@ -104,14 +104,14 @@ public class MainController {
 	@ResponseBody
 	@RequestMapping(value = "/like")
 	public HashMap<String, Object> like(){
-		String url = "resourcex/img/";
+		String url = "resources/img/";
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<String> like = dao.like();
 		ArrayList<String> arr = new ArrayList();
 		for (int i = 0; i < like.size(); i++) {
 			url += like.get(i);
 			arr.add(url);
-			url += "resources/img/";
+			url = "resources/img/";
 		}
 		map.put("like", arr);
 		return map;
