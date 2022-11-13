@@ -13,13 +13,13 @@ public class TestController {
 	//이거 복붙해서 써요
 	//여기다 코드쓰면 바보
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	/*
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		logger.info("정상 실행");
 		model.addAttribute("test", "test" );
 
 		return "adminMain";
 	}
-
+	*/
 }

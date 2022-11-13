@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.gudi.project.dao.AdminSendMsgDAO">
+<!-- 이 파일은 예시 쓸려고 만든 파일임 -->
+<!-- 여기엔 코드 적는거 아니에요 -->
+<!-- 여기에 코드 적으면 바보 -->
+<!--  한 곳에 쓰지 말고 기능별로 분리
+		ex) 메인 = main_mapper.xml + mainDAO
+			 프로필 = profile_mapper.xml + ProfileDAO
+ -->
+ <insert id="sendMSG">
+ 	insert into admin_msg (exp_time, sender, msg_content)values(#{param1}, #{param2}, #{param3});
+ </insert>
+ 
+  <select id="getIdx" resultType="int">	
+ 	select mem_num from member where mem_name = #{param1}
+ </select>
+ 
+ 
+ 
+</mapper>

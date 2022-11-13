@@ -1,11 +1,17 @@
 package com.gudi.project.controller;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,13 +37,25 @@ public class AdminPageController {
 	 * */
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired AdminMainDAO amDAOs;
+	long curDate;
+	Date date=null;
+	String dateStr ="";
+	ArrayList<String> dateStrs = null;
+	@RequestMapping(value = "/")
+	public String gotest(HttpSession session) {
+		session.setAttribute("id", "관리자");//관리자 세션 등록 ==> 나중에 로그인한 계정으로 세션 Value 변경
+		logger.info("세션 저장 했어요");
+		return "adminMain";
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/adminDes", method = RequestMethod.POST)
-	public HashMap<String, Object> admin(Model model) {
+	public HashMap<String, Object> admin() {
 		//최근 신고 리스트 조회
 		logger.info("신고 리스트 조회 중..");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int row_Des = amDAOs.cntDesList();
+		dateStrs = new ArrayList<String>();
 		logger.info("신고 리스트 개수 조회 : "+row_Des);
 		map.put("desCnt",row_Des);
 		if(row_Des==0) {
@@ -45,7 +63,23 @@ public class AdminPageController {
 		}else {
 			ArrayList<DecListDTO> list_Des = amDAOs.recDesList();
 			logger.info("신고 리스트 조회 : "+list_Des.size());
+			//시간 가져온다.
+			for(int i=0; i<list_Des.size(); i++) {
+				curDate = (long) list_Des.get(i).getDec_date().getTime();
+				date = new Date(curDate);
+				SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+				if (date != null)
+				{
+					dateStr = dateFormatter.format(date.getTime());
+					dateStrs.add(dateStr);
+				}
+				logger.info(dateStr);
+				
+			}
+			
 			map.put("resDes", list_Des);
+			map.put("resDateStrs", dateStrs);
+			
 		}
 		return map;
 	}
@@ -55,6 +89,7 @@ public class AdminPageController {
 		//최근 작성한 공지
 		logger.info("공지 리스트 조회 중..");
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		dateStrs = new ArrayList<String>();
 		int row_Adm = amDAOs.cntAdmList();
 		logger.info("공지 리스트 개수 조회 : "+row_Adm);
 		map.put("AdmCnt",row_Adm);
@@ -63,7 +98,21 @@ public class AdminPageController {
 		}else {
 			ArrayList<DecListDTO> list_Adm = amDAOs.recAdmList();
 			logger.info("공지 리스트 조회 : "+list_Adm.size());
+			
+			for(int i=0; i<list_Adm.size(); i++) {
+				curDate = (long) list_Adm.get(i).getWrite_time().getTime();
+				date = new Date(curDate);
+				SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+				if (date != null)
+				{
+					dateStr = dateFormatter.format(date.getTime());
+					dateStrs.add(dateStr);
+				}
+				logger.info(dateStr);
+				
+			}
 			map.put("resAdm", list_Adm);
+			map.put("resAdmDates", dateStrs);
 		}
 		return map;
 	}
@@ -74,6 +123,7 @@ public class AdminPageController {
 		logger.info("최근 가입 유저 리스트 조회 중..");
 		int row_RecJoin = amDAOs.cntRecJoinList();
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		dateStrs = new ArrayList<String>();
 		logger.info("최근 가입 리스트 개수 조회 : "+row_RecJoin);
 		map.put("RecJoinCnt",row_RecJoin);
 		if(row_RecJoin==0) {
@@ -81,7 +131,21 @@ public class AdminPageController {
 		}else {
 			ArrayList<DecListDTO> list_RecJoin = amDAOs.recJoinList();
 			logger.info("최근 가입 리스트 조회 : "+list_RecJoin.size());
+			
+			for(int i=0; i<list_RecJoin.size(); i++) {
+				curDate = (long) list_RecJoin.get(i).getMem_regDate().getTime();
+				date = new Date(curDate);
+				SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+				if (date != null)
+				{
+					dateStr = dateFormatter.format(date.getTime());
+					dateStrs.add(dateStr);
+				}
+				logger.info(dateStr);
+				
+			}
 			map.put("resRecJoin", list_RecJoin);
+			map.put("resRecJoinDates", dateStrs);
 		}
 		return map;
 	}
@@ -99,8 +163,30 @@ public class AdminPageController {
 		}else {
 			ArrayList<DecListDTO> list_Board = amDAOs.recBoardList();
 			logger.info("게시글 리스트 조회 : "+list_Board.size());
-			map.put("res", list_Board);
+			
+			for(int i=0; i<list_Board.size(); i++) {
+				curDate = (long) list_Board.get(i).getBoard_time().getTime();
+				date = new Date(curDate);
+				SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+				if (date != null)
+				{
+					dateStr = dateFormatter.format(date.getTime());
+					dateStrs.add(dateStr);
+				}
+				logger.info(dateStr);
+				
+			}
+			
+			map.put("resBoard", list_Board);
+			map.put("resBoardDates", dateStrs);
 		}
+		return map;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/goUser", method=RequestMethod.POST)
+	public HashMap<String, Object> goUser(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		return map;
 	}
 }
