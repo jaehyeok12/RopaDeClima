@@ -33,7 +33,7 @@ public class RecommendController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/1")
 
 	public String main(Model model) throws Exception {
 

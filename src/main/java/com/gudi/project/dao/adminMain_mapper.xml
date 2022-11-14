@@ -16,7 +16,7 @@
  </select>
  
  <select id="recDesList" resultType="com.gudi.project.dto.DecListDTO">
- 	select m.mem_nickname, d.reason	, dl.dec_date from member m, decs d, dec_list dl, post p where dl.mem_num=m.mem_num and dl.write_num = p.board_num order by dl.dec_date DESC;
+ 	select m.mem_nickname, d.reason	, dl.dec_date from member m, decs d, dec_list dl, post p where dl.mem_num=m.mem_num and dl.write_num = p.board_num order by dl.dec_date DESC limit 5;
  </select>
  
  
@@ -25,7 +25,7 @@
  </select>
  
  <select id="recAdmList" resultType="com.gudi.project.dto.DecListDTO">
- 	select am.msg_id, m.mem_nickname, am.write_time from member m, admin_msg am where am.sender = m.mem_num order by am.write_time DESC;
+ 	select am.msg_id, m.mem_nickname, am.write_time from member m, admin_msg am where am.sender = m.mem_num order by am.write_time DESC limit 5;
  </select>
  
  
@@ -34,7 +34,7 @@
  </select>
  
  <select id="recJoinList" resultType="com.gudi.project.dto.DecListDTO">
- 	select mem_num, mem_nickname, mem_regDate from member order by mem_num DESC;
+ 	select mem_num, mem_nickname, mem_regDate from member order by mem_num DESC limit 5;
  </select>
  
  
@@ -43,7 +43,7 @@
  </select>
  
  <select id="recBoardList" resultType="com.gudi.project.dto.DecListDTO">
- 	select p.board_num, m.mem_nickname, p.board_time from post p, member m where p.mem_num=m.mem_num order by p.board_num DESC;
+ 	select p.board_num, m.mem_nickname, p.board_time from post p, member m where p.mem_num=m.mem_num order by p.board_num DESC limit 5;
  </select>
  
  

@@ -13,15 +13,15 @@ public interface AdminBoardListDAO {
  * */
 
 	int boardCnt();
-	ArrayList<DecListDTO> boardLoad();
+	ArrayList<DecListDTO> boardLoad(int offset);
 	int getIdx(String admin_name);
 	int getNicknameToIdx(String nickname);
 	int reviseLog(int user_idx, int admin_idx, String state);
 	int reviseBoardState(String board, String state);
 	int searchCnt(String state);
-	ArrayList<DecListDTO> searchList(String state);
+	ArrayList<DecListDTO> searchList(String state, int offset);
 	int searchEmailCnt(String email);
-	ArrayList<DecListDTO> searchEmailList(String email);
+	ArrayList<DecListDTO> searchEmailList(String email, int offset);
 	int searchNickCnt(String nickname);
-	ArrayList<DecListDTO> searchNickList(String nickname);
+	ArrayList<DecListDTO> searchNickList(String nickname, int offset);
 }

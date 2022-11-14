@@ -17,7 +17,7 @@
  </select>
  
  <select id="boardLoad" resultType="com.gudi.project.dto.DecListDTO">
- select p.board_num, m.mem_num, m.mem_email, m.mem_nickname, p.board_time, p.board_good, p.board_state from  member m, post p where p.mem_num=m.mem_num order by p.board_num DESC;
+ select p.board_num, m.mem_num, m.mem_email, m.mem_nickname, p.board_time, p.board_good, p.board_state from  member m, post p where p.mem_num=m.mem_num order by p.board_num DESC limit 10 offset #{param1};
  </select>
  
  
@@ -43,26 +43,26 @@
  </select>
  
  <select id="searchList" resultType="com.gudi.project.dto.DecListDTO">
- select p.board_num, m.mem_num, m.mem_email, m.mem_nickname, p.board_time, p.board_good, p.board_state from  member m, post p where p.mem_num=m.mem_num and board_state = #{param1} order by p.board_num DESC;
+ select p.board_num, m.mem_num, m.mem_email, m.mem_nickname, p.board_time, p.board_good, p.board_state from  member m, post p where p.mem_num=m.mem_num and board_state = #{param1} order by p.board_num DESC limit 10 offset #{param2};
  </select>
  
  <!-- email 검색 -->
    <select id="searchEmailCnt" resultType="int">
- 	 	select count(p.board_num) m.email from post p, member m where p.mem_num=m.mem_num and m.mem_email like #{param1};
+ 	 	select count(p.board_num) from post p, member m where p.mem_num=m.mem_num and m.mem_email like #{param1};
  </select>
  
  <select id="searchEmailList" resultType="com.gudi.project.dto.DecListDTO">
  
- select p.board_num, m.mem_num, m.mem_email, m.mem_nickname, p.board_time, p.board_good, p.board_state from  member m, post p where p.mem_num=m.mem_num AND m.mem_email like #{param1} order by p.board_num DESC;
+ select p.board_num, m.mem_num, m.mem_email, m.mem_nickname, p.board_time, p.board_good, p.board_state from  member m, post p where p.mem_num=m.mem_num AND m.mem_email like #{param1} order by p.board_num DESC limit 10 offset #{param2};
  </select>
   
  <!-- nickname 검색 -->
    <select id="searchNickCnt" resultType="int">
- 	select count(board_num) from post  where p.mem_num=m.mem_num and m.mem_nickname like #{param1};
+ 	select count(p.board_num) from post p, member m where p.mem_num=m.mem_num and m.mem_nickname like #{param1};
  </select>
  
  <select id="searchNickList" resultType="com.gudi.project.dto.DecListDTO">
- select p.board_num, m.mem_num, m.mem_email, m.mem_nickname, p.board_time, p.board_good, p.board_state from  member m, post p  where p.mem_num=m.mem_num and m.mem_nickname like #{param1} order by p.board_num DESC;
+ select p.board_num, m.mem_num, m.mem_email, m.mem_nickname, p.board_time, p.board_good, p.board_state from  member m, post p  where p.mem_num=m.mem_num and m.mem_nickname like #{param1} order by p.board_num DESC limit 10 offset #{param2};
  </select>
  
 </mapper>
