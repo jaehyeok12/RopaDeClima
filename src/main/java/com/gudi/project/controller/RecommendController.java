@@ -1,31 +1,20 @@
 package com.gudi.project.controller;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @Controller
@@ -34,7 +23,6 @@ public class RecommendController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/")
-
 	public String main(Model model) throws Exception {
 
 		// 홈占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 키
@@ -114,8 +102,10 @@ public class RecommendController {
 		JSONArray item = (JSONArray)items.get("item");
 		JSONObject TMX = (JSONObject) item.get(120);
 		JSONObject TMN = (JSONObject) item.get(591);
+		JSONObject SKY = (JSONObject) item.get(5);
 		logger.info("TMX : "+TMX);
 		logger.info("TMN : "+TMN);
+		logger.info("SKY : "+SKY);
 
 		JSONObject weather; 
 		String category;
@@ -139,7 +129,8 @@ public class RecommendController {
 		
 		model.addAttribute("TMX",TMX);
 		model.addAttribute("TMN",TMN);
-		return "test";
+		model.addAttribute("SKY",SKY);
+		return "ropadeclima_Main";
 
 	}
 	

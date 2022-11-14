@@ -7,8 +7,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <style>
 table, th, td {
@@ -34,11 +40,21 @@ p{
 	margin-top: 0px;
 }
 
+.navbar-inverse{
+	height : 72px;
+	background-color: gray;
+}
+
 
 </style>
 
 <body>
+	<nav class="navbar-inverse">
+		
+	</nav>
 	<h1>날씨</h1>
+	<button class="login">로그인</button>
+	<h2 class="weather">${SKY.fcstValue}</h2>
 	<button class="allShow">전체조회</button> 
 	<button class ="newOrder">최신순</button>
 	<button class ="like">인기순</button>
@@ -48,6 +64,7 @@ p{
 	<table id="weather">
 		<thead>
 			<tr>
+				
 				<th>오늘 날짜</th>
 				<td>${TMX.fcstDate}</td>
 				<th id="TMX">최고 온도</th>
@@ -64,6 +81,8 @@ p{
 
 </body>
 <script>
+	var sky = ${SKY.fcstValue};
+	console.log(sky);
 	var tmx = ${TMX.fcstValue};
 	var tmn = ${TMN.fcstValue};
 	var msg = "조회된 기록이 없습니다.";
@@ -95,7 +114,6 @@ p{
 		for(var i=0; i<url.length; i++){
 			content += '<div style = "float:left">';
 			content += '<img src ="'+ url[i] +'">';
-			content += '<p>'+ ${url.mem_nickname} +'</p>';
 			//content += '<p>'+url.board_num+'</p>'+'</div>'		
 			content += '</div>'		
 			if(i%4 == 0){
@@ -119,7 +137,6 @@ p{
 		for(var i=0; i<allShow.length; i++){
 			content += '<div style = "float:left">';
 			content += '<img src ="'+ allShow[i] +'">';
-			content += '<p>'+ ${allShow.mem_nickname} +'</p>';		
 			content += '</div>'		
 			if(i%4 == 0){
 				content += '<br>';
@@ -138,7 +155,6 @@ p{
 		for(var i=0; i<newOrder.length; i++){
 			content += '<div style = "float:left">';
 			content += '<img src ="'+ newOrder[i] +'">';
-			content += '<p>'+ ${newOrder.mem_nickname} +'</p>';		
 			content += '</div>'		
 			if(i%4 == 0){
 				content += '<br>';
@@ -156,7 +172,6 @@ p{
 		for(var i=0; i<like.length; i++){
 			content += '<div style = "float:left">';
 			content += '<img src ="'+ like[i] +'">';
-			content += '<p>'+ ${like.mem_nickname} +'</p>';		
 			content += '</div>'		
 			if(i%4 == 0){
 				content += '<br>';
@@ -209,7 +224,7 @@ p{
 				,dtataType : 'JSON'
 				,success : function(data){
 					console.log(data);
-					newOrder(data.newOrder);
+					allShow_list(data.newOrder);
 				}
 				,error : function(e){
 					console.log(e);
@@ -241,7 +256,7 @@ p{
 				,dataType : 'JSON'
 				,success : function (data) {
 					console.log(data);
-					likeList(data.like);
+					allShow_list(data.like);
 				}
 				,error : function(e){
 					console.log(e);
@@ -250,9 +265,45 @@ p{
 		});
 	});
 	
+	// 날씨 알림
+	 $(function(){
+		if($('.weather').text()==4){
+			$('.weather').text('흐림');
+		}
+		if($('.weather').text()==3){
+			$('.weather').text('구름많음');
+		}
+		if($('.weather').text()==1){
+			$('.weather').text('맑음');
+		}
+	}); 
 	
- 
+	  $(function(){
+		$('.login').click(function(){
+	 		$.ajax({
+	 			type : 'GET'
+	 			,url : 'mainLogin'
+	 			,data : {}
+	 			,success : function(){
+	 				console.log('move the login');
+	 				moveLogin();
+	 			}
+	 			,error : function(e){
+	 				console.log(e);
+	 			}
+	 		});
+	 	});	
+	});  
+	  
+	function moveLogin() {
+		$('.login').click(function(){
+			location.href='mainLogin';
+		});
+	}
 	
-
+ 	
+	
+	
+	
 </script>
 </html>

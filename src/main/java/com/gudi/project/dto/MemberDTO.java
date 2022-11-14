@@ -3,6 +3,7 @@ package com.gudi.project.dto;
 import java.sql.Date;
 
 public class MemberDTO {
+	
 	private int mem_num;
 	private String mem_name;
 	private String mem_email;
@@ -13,7 +14,6 @@ public class MemberDTO {
 	private int mem_ban;
 	private String mem_autority;
 	private String mem_nickname;
-	
 	
 	public int getMem_num() {
 		return mem_num;
@@ -75,6 +75,7 @@ public class MemberDTO {
 	public void setMem_nickname(String mem_nickname) {
 		this.mem_nickname = mem_nickname;
 	}
+
 	
 	
 }

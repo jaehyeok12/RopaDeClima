@@ -52,9 +52,9 @@
 			</th>
 		</tr>
 		<tr>
-			<td> <button type="button" onclick="#">이메일 찾기</button> </td>
-			<td> <button type="button" onclick="#">비밀번호 찾기</button> </td>
-			<td> <input type="button" value="회원가입" onclick="location.href='joinForm'"/></td>
+			<td> <button type="button" onclick="location.href='find_id'">이메일 찾기</button> </td>
+			<td> <button type="button" onclick="location.href='find_pw'">비밀번호 찾기</button> </td>
+			<td> <input type="button" value="회원가입" onclick="location.href='joinForm'"></td>
 		</tr>
 	</table>	
 	</form>
