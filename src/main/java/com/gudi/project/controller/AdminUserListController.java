@@ -32,18 +32,25 @@ public class AdminUserListController {
 	@Autowired AdminUserListDAO aulDAOs;
 	@ResponseBody
 	@RequestMapping(value = "/userLoad", method = RequestMethod.GET)
-	public HashMap<String, Object> admin() {
+	public HashMap<String, Object> admin(@RequestParam int page) {
 		//최근 신고 리스트 조회
 		logger.info("유저 리스트 조회 중..");
+		
+		int offset = (page-1)*10;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int row_Des = aulDAOs.cntUserList();
 		logger.info("유저 리스트 개수 조회 : "+row_Des);
-		map.put("desCnt",row_Des);
+		int totalPages=row_Des/10;
+		if(row_Des%10!=0) {
+			totalPages++;
+		}
+		logger.info("유저 총 페이지 수 조회 : "+totalPages);
+		
+		map.put("total",totalPages);
 		if(row_Des==0) {
 			map.put("resUserList","조회된 유저 데이터가 없습니다.");
 		}else {
-			ArrayList<DecListDTO> list_Des = aulDAOs.userList();
-			logger.info("유저 리스트 조회 : "+list_Des.size());
+			ArrayList<DecListDTO> list_Des = aulDAOs.userList(offset);
 			map.put("list", list_Des);
 		}
 		return map;
@@ -147,12 +154,23 @@ public class AdminUserListController {
 	//검색
 	@ResponseBody
 	@RequestMapping(value = "/nickSearch", method = RequestMethod.GET)
-	public HashMap<String, Object> nickSearch(@RequestParam String nickname){
+	public HashMap<String, Object> nickSearch(@RequestParam String nickname, @RequestParam int page){
 		logger.info("이 닉네임을 검색할게요.");
 		logger.info(" ==> " + nickname);
+		int offset = (page-1)*10;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		nickname = '%'+nickname+'%';
-		ArrayList<DecListDTO> list_nickSearch = aulDAOs.nickSearch(nickname);
+		int row_Des = aulDAOs.cntUserNickSearchList(nickname);
+		logger.info("유저 수 조회 : "+row_Des);
+		int totalPages=row_Des/10;
+		if(row_Des%10!=0) {
+			totalPages++;
+		}
+		logger.info("유저 총 페이지 수 조회 : "+totalPages);
+
+		map.put("total",totalPages);
+		
+		ArrayList<DecListDTO> list_nickSearch = aulDAOs.nickSearch(nickname, offset);
 		logger.info("조회된 검색 결과"+list_nickSearch.size());
 		map.put("list", list_nickSearch);
 		return map;
@@ -160,14 +178,27 @@ public class AdminUserListController {
 	//닉네임과 권한
 	@ResponseBody
 	@RequestMapping(value = "/nickAuthSearch", method = RequestMethod.GET)
-	public HashMap<String, Object> nickAuthSearch(@RequestParam String nickname, @RequestParam String auth){
+	public HashMap<String, Object> nickAuthSearch(@RequestParam String nickname, @RequestParam String auth, @RequestParam int page){
 		logger.info("이 닉네임을 검색할게요.");
 		logger.info(" ==> " + nickname);
 		logger.info("이 권한을 검색할게요.");
 		logger.info(" ==> " + auth);
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		int offset = (page-1)*10;
 		nickname = '%'+nickname+'%';
-		ArrayList<DecListDTO> list_nickAuthSearch = aulDAOs.nickAuthSearch(nickname, auth);
+		
+		int row_Des = aulDAOs.cntUserNickAndAuthSearchList(nickname, auth);
+		logger.info("유저 수 조회 : "+row_Des);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int totalPages=row_Des/10;
+		if(row_Des%10!=0) {
+			totalPages++;
+		}
+		logger.info("유저 총 페이지 수 조회 : "+totalPages);
+
+		map.put("totals",totalPages);
+		
+		
+		ArrayList<DecListDTO> list_nickAuthSearch = aulDAOs.nickAuthSearch(nickname, auth, offset);
 		logger.info("조회된 검색 결과"+list_nickAuthSearch.size());
 		map.put("list", list_nickAuthSearch);
 		

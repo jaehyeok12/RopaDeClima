@@ -14,9 +14,15 @@
  <select id="cntUserList" resultType="int">
  	select count(mem_num) from member
  </select>
+ <select id="cntUserNickSearchList" resultType="int">
+ 	select count(mem_num) from member where mem_nickname like #{param1}
+ </select>
+ <select id="cntUserNickAndAuthSearchList" resultType="int">
+ 	select count(mem_num) from member where mem_nickname like #{param1} and mem_autority = #{param2}
+ </select>
  
  <select id="userList" resultType="com.gudi.project.dto.DecListDTO">
- 	select mem_num, mem_email, mem_name, mem_nickname, mem_autority, mem_ban from member order by mem_num DESC;
+ 	select mem_num, mem_email, mem_name, mem_nickname, mem_autority, mem_ban from member order by mem_num DESC limit 10 offset #{param1};
  </select>
  
  <update id="userBan">
@@ -48,10 +54,10 @@
  </insert>
  
  <select id="nickSearch" resultType="com.gudi.project.dto.DecListDTO">
- 	select mem_num, mem_email, mem_name, mem_nickname, mem_autority, mem_ban from member where mem_nickname like #{param1} order by mem_num DESC;
+ 	select mem_num, mem_email, mem_name, mem_nickname, mem_autority, mem_ban from member where mem_nickname like #{param1} order by mem_num DESC limit 10 offset #{param2};
  </select>
  
   <select id="nickAuthSearch" resultType="com.gudi.project.dto.DecListDTO">
- 	select mem_num, mem_email, mem_name, mem_nickname, mem_autority, mem_ban from member where mem_nickname like #{param1} and mem_autority = #{param2} order by mem_num DESC;
+ 	select mem_num, mem_email, mem_name, mem_nickname, mem_autority, mem_ban from member where mem_nickname like #{param1} and mem_autority = #{param2} order by mem_num DESC limit 10 offset #{param3};
  </select>
 </mapper>

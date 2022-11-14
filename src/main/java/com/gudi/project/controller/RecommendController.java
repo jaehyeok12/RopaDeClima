@@ -22,7 +22,12 @@ public class RecommendController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/")
+=======
+	@RequestMapping(value = "/1")
+
+>>>>>>> origin/master
 	public String main(Model model) throws Exception {
 
 		// 홈占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 키

@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<link
+<link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <script
@@ -22,14 +22,17 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="resources/js/jquery.twbsPagination.js"></script>
 
-
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
 </head>
 <style></style>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <body>
 	<!-- The Modal -->
 	<div class="modal fade" id="myModal">
@@ -45,7 +48,7 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<select id="revAuths">
-						
+
 						<option>user</option>
 						<option>admin</option>
 						<option>chiefAdmin</option>
@@ -63,18 +66,19 @@
 		</div>
 	</div>
 
-		<h3>
-			닉네임 : <input type="text" id="searchText"><button type="button" id="searchUser">검색</button>
-		</h3>
-		<h3 id="selectedAuth">계정 권한 :</h3>
-		<select id="auths">
-			<option value="user">user</option>
-			<option value="admin">admin</option>
-			<option value="chiefAdmin">chiefAdmin</option>
-		</select>
+	<h3>
+		닉네임 : <input type="text" id="searchText">
+		<button type="button" onclick="searchUser()">검색</button>
+	</h3>
+	<h3 id="selectedAuth">계정 권한 :</h3>
+	<select id="auths">
+		<option value="user">user</option>
+		<option value="admin">admin</option>
+		<option value="chiefAdmin">chiefAdmin</option>
+	</select>
 	<button id="select">선택</button>
-	<button id="reload">전체 조회</button>
-	
+	<button onclick="load(1)">전체 조회</button>
+
 	<table>
 		<thead>
 			<tr>
@@ -92,6 +96,16 @@
 		<tbody id="userList">
 
 		</tbody>
+		<tr>
+			<td colspan="6" id="paging">
+				<div class="container">
+					<nav area-label="Page navigation" style="text-align: center">
+						<ui class="pagination" id="paginationAll"></ui>
+						<ui class="pagination" id="paginationSearch"></ui>
+					</nav>
+				</div>
+			</td>
+		</tr>
 	</table>
 
 
@@ -100,6 +114,7 @@
 
 var data='';
 var auth='';
+var showPage=1;
 
 var auths = $('#auths option:selected').val();
 //계정 권한 선택
@@ -110,18 +125,36 @@ $('#select').click(function(e){
 	$('#selectedAuth').append('계정 권한 : '+ auth);
 	
 });
-
+load(showPage);
 //전체 로딩
-function load(){
+function load(page){
+	console.log(page)
 	$.ajax({
 		type : "GET",
 		url : "userLoad",
-		data : {},
+		data : {page:page},
 		dataType : "JSON",
 		success : function(result){
 			console.log("성공");
 			console.log(result);
 			createUserTable(result.list);
+			
+			var totalPages = result.total;
+			//플러그인 적용
+			$('#paginationSearch').empty();
+			$('#paginationAll').twbsPagination({
+				startPage:page,//시작 페이지
+				totalPages:totalPages,//총 페이지 수
+				visiblePages:10,//기본으로 보여질 페이지 수
+				onPageClick:function(e,page){//클릭했을 때 실행 내용
+					console.log(e);	
+					console.log(page);	
+					load(page);
+				}
+			
+			
+			});
+			
 		},
 		error : function(e){
 			console.log("error");
@@ -162,7 +195,6 @@ function createUserTable(list){
 
 }
 
-load();
 //유저 탈퇴처리
 function userBan(id){
 	var id= id;
@@ -174,7 +206,7 @@ function userBan(id){
 		dataType : "JSON",
 		success : function(result){
 			console.log('탈퇴처리 완료');
-			load();
+			load(showPage);
 		},
 		error : function(e){
 			console.log('실패');
@@ -192,7 +224,7 @@ function userRecover(id){
 		dataType : "JSON",
 		success : function(result){
 			console.log('복구처리 완료');
-			load();
+			load(showPage);
 		},
 		error : function(e){
 			console.log('실패');
@@ -223,7 +255,8 @@ function revisionAuths(){
 		dataType : "JSON",
 		success : function(result){
 			console.log('success');
-			load();
+			load(showPage);
+			
 		},
 		error : function(e){
 			console.log('err')
@@ -233,14 +266,15 @@ function revisionAuths(){
 	
 }
 //검색을 해보자!
-$("#searchUser").click(function(){
+function searchUser(page){
 	data='';
 	auth='';
 	data=$("#searchText").val();
 	auth=$("#auths option:selected").val();
-	
+	page = 1;
 	console.log("입력한 닉네임 ==> "+data);
 	console.log("선택한 권한 ==> "+auth);
+	console.log("선택한 페이지 ==> "+showPage);
 	if(data==''){
 		alert('닉네임을 입력해주세요!');
 	}else{
@@ -250,12 +284,29 @@ $("#searchUser").click(function(){
 				url : "nickSearch",
 				type : "GET",
 				data : {
-					'nickname' : data
+					'nickname' : data,
+					'page':page	
 				},
 				dataType : "JSON",
 				success : function(result){
 					
+					
 					createUserTable(result.list);
+
+					var totalPages = result.total;
+					//플러그인 적용
+					$('#paginationAll').empty();
+					$('#paginationSearch').twbsPagination({
+						startPage:1,//시작 페이지
+						totalPages:totalPages,//총 페이지 수
+						visiblePages:10,//기본으로 보여질 페이지 수
+						onPageClick:function(e,page){//클릭했을 때 실행 내용
+							console.log(e);	
+							console.log(page);	
+							searchUser(page);
+						}
+					
+					});
 				},
 				error : function(e){
 					console.log("SearchError");
@@ -268,12 +319,26 @@ $("#searchUser").click(function(){
 				type : "GET",
 				data : {
 					'nickname' : data,
-					'auth' : auth
+					'auth' : auth,
+					'page':showPage
 				},
 				dataType : "JSON",
 				success : function(result){
-					console.log("tt")
 					createUserTable(result.list);
+					var totalPages = result.totals;
+					//플러그인 적용
+					$('#paginationAll').empty();
+					$('#paginationSearch').twbsPagination({
+						startPage:1,//시작 페이지
+						totalPages:totalPages,//총 페이지 수
+						visiblePages:10,//기본으로 보여질 페이지 수
+						onPageClick:function(e,page){//클릭했을 때 실행 내용
+							console.log(e);	
+							console.log(page);	
+							searchUser(page);
+						}
+					
+					});
 				},
 				error : function(e){
 					console.log("SearchError");
@@ -282,12 +347,9 @@ $("#searchUser").click(function(){
 		}
 	}
 	
-});
+};
 
 //전체 조회
-$("#reload").click(function(){
-	load();
-});
 
 </script>
 </html>

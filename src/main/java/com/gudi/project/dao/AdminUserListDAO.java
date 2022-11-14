@@ -9,7 +9,7 @@ public interface AdminUserListDAO {
 
 	int cntUserList();
 
-	ArrayList<DecListDTO> userList();
+	ArrayList<DecListDTO> userList(int offset);
 
 	int userBan(int id);
 
@@ -27,8 +27,12 @@ public interface AdminUserListDAO {
 
 	int reviseLog(int user_idx, int admin_idx, String auth);
 
-	ArrayList<DecListDTO> nickSearch(String nickname);
+	ArrayList<DecListDTO> nickSearch(String nickname, int offset);
 
-	ArrayList<DecListDTO> nickAuthSearch(String nickname, String auth);
+	ArrayList<DecListDTO> nickAuthSearch(String nickname, String auth, int offset);
+
+	int cntUserNickSearchList(String nickname);
+
+	int cntUserNickAndAuthSearchList(String nickname, String auth);
 
 }

@@ -46,16 +46,28 @@ public class AdminBoardListController {
 
 	@ResponseBody
 	@RequestMapping(value = "/boardLoad", method = RequestMethod.GET)
-	public HashMap<String, Object> boardLoad(){
+	public HashMap<String, Object> boardLoad(@RequestParam int page){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int row_board = ablDAO.boardCnt();
+
+		int offset = (page-1)*10;
+
 		dateStrs = new ArrayList<String>();
 
 		logger.info("조회된 게시글의 개수 ==> " + row_board);
+		int totalPages=row_board/10;
+		if(row_board%10!=0) {
+			totalPages++;
+		}
+
+		logger.info("게시글 총 페이지 수 조회 : "+totalPages);
+
+		map.put("total",totalPages);
+
 		if(row_board==0) {
 			map.put("resBoard", no_Datas);
 		}else {
-			ArrayList<DecListDTO> boardList = ablDAO.boardLoad();
+			ArrayList<DecListDTO> boardList = ablDAO.boardLoad(offset);
 			for(int i=0; i<boardList.size(); i++) {
 				curDate = (long) boardList.get(i).getBoard_time().getTime();
 				date = new Date(curDate);
@@ -115,16 +127,24 @@ public class AdminBoardListController {
 	//라디오버튼 검색
 	@ResponseBody
 	@RequestMapping(value = "/stateSearch", method = RequestMethod.GET)
-	public HashMap<String, Object> stateSearch(@RequestParam String state){
+	public HashMap<String, Object> stateSearch(@RequestParam String state, @RequestParam int page){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int row_board = ablDAO.searchCnt(state);
 		dateStrs = new ArrayList<String>();
+		int offset = (page-1)*10;
 
 		logger.info("조회된 게시글의 개수 ==> " + row_board);
 		if(row_board==0) {
 			map.put("resBoard", no_Datas);
 		}else {
-			ArrayList<DecListDTO> searchList = ablDAO.searchList(state);
+			int totalPages=row_board/10;
+			if(row_board%10!=0) {
+				totalPages++;
+			}
+
+			logger.info("조회된 게시글의 페이지 수 ==> " + totalPages);
+			map.put("total",totalPages);
+			ArrayList<DecListDTO> searchList = ablDAO.searchList(state, offset);
 			for(int i=0; i<searchList.size(); i++) {
 				curDate = (long) searchList.get(i).getBoard_time().getTime();
 				date = new Date(curDate);
@@ -146,17 +166,25 @@ public class AdminBoardListController {
 	//email 검색
 	@ResponseBody
 	@RequestMapping(value = "/emailSearch", method = RequestMethod.GET)
-	public HashMap<String, Object> emailSearch(@RequestParam String email){
+	public HashMap<String, Object> emailSearch(@RequestParam String email, @RequestParam int page){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		//int row_board = ablDAO.searchEmailCnt(email);
 		email = "%"+email+"%";
+		int row_board = ablDAO.searchEmailCnt(email);
+		int offset = (page-1)*10;
+		int totalPages=row_board/10;
+		if(row_board%10!=0) {
+			totalPages++;
+		}
+		logger.info("조회된 게시글의 페이지 수 ==> " + totalPages);
+		map.put("total",totalPages);
+		
 		dateStrs = new ArrayList<String>();
 
-		//logger.info("조회된 게시글의 개수 ==> " + row_board);
+		logger.info("조회된 게시글의 개수 ==> " + row_board);
 		//if(row_board==0) {
 		//	map.put("resBoard", no_Datas);
 		//}else {
-		ArrayList<DecListDTO> searchEmailList = ablDAO.searchEmailList(email);
+		ArrayList<DecListDTO> searchEmailList = ablDAO.searchEmailList(email, offset);
 		logger.info("rotn : " + searchEmailList.size());
 		for(int i=0; i<searchEmailList.size(); i++) {
 			curDate = (long) searchEmailList.get(i).getBoard_time().getTime();
@@ -180,17 +208,23 @@ public class AdminBoardListController {
 	//nickname 검색
 	@ResponseBody
 	@RequestMapping(value = "/nicknameSearch", method = RequestMethod.GET)
-	public HashMap<String, Object> nicknameSearch(@RequestParam String nickname){
+	public HashMap<String, Object> nicknameSearch(@RequestParam String nickname, @RequestParam int page){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		//int row_board = ablDAO.searchNickCnt(nickname);
 		nickname = '%'+nickname+'%';
+		int row_board = ablDAO.searchNickCnt(nickname);
 		dateStrs = new ArrayList<String>();
-
-		//logger.info("조회된 게시글의 개수 ==> " + row_board);
+		int offset = (page-1)*10;
+		int totalPages=row_board/10;
+		if(row_board%10!=0) {
+			totalPages++;
+		}
+		map.put("total",totalPages);
+		
+		logger.info("조회된 게시글의 개수 ==> " + row_board);
 		//if(row_board==0) {
 		//	map.put("resBoard", no_Datas);
 		//}else {
-		ArrayList<DecListDTO> searchNickList = ablDAO.searchNickList(nickname);
+		ArrayList<DecListDTO> searchNickList = ablDAO.searchNickList(nickname, offset);
 		for(int i=0; i<searchNickList.size(); i++) {
 			curDate = (long) searchNickList.get(i).getBoard_time().getTime();
 			date = new Date(curDate);
@@ -202,7 +236,6 @@ public class AdminBoardListController {
 			}
 			logger.info(dateStr);
 		}
-		logger.info("-------------------------------------");
 		map.put("searchNickResBoard", searchNickList);
 		map.put("boardDateStrs", dateStrs);
 		//}
